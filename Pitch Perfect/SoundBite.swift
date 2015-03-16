@@ -8,6 +8,10 @@
 
 import Foundation
 
+/*
+  Provides a reference to a file where soudn data is stored.
+*/
+
 class SoundBite: NSObject {
     
     var filePathUrl: NSURL!
