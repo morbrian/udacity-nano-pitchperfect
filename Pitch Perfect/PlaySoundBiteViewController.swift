@@ -9,17 +9,22 @@
 import UIKit
 import AVFoundation
 
+/*
+  PlaySoundBiteViewController displays a variety of buttons to let the user
+  play a recent recording with a desired audio effect.
+*/
+
 let RateSlow: Float = 0.5
-let RateFast: Float = 1.5
+let RateFast: Float = 2.0
 let PitchHigh: Float = 1000
 let PitchLow: Float = -1000
+let ReverbWet: Float = 100
 
 class PlaySoundBiteViewController: UIViewController {
 
     var audioEngine: AVAudioEngine!
     var audioUnitTimePitch: AVAudioUnitTimePitch!
     var audioFile: AVAudioFile!
-
     var soundBite:SoundBite!
     
     override func viewDidLoad() {
@@ -27,6 +32,11 @@ class PlaySoundBiteViewController: UIViewController {
         audioEngine = AVAudioEngine()
         audioUnitTimePitch = AVAudioUnitTimePitch()
         audioFile = AVAudioFile(forReading: soundBite.filePathUrl, error: nil)
+    }
+    
+    @IBAction func stop(sender: UIButton) {
+        audioEngine.stop()
+        audioEngine.reset()
     }
     
     @IBAction func playSlow(sender: UIButton) {
@@ -44,36 +54,42 @@ class PlaySoundBiteViewController: UIViewController {
         playSoundBite(pitch: PitchHigh)
     }
     
-    @IBAction func playDarthvader(sender: UIButton) {
-        NSLog("playDarthvader")
+    @IBAction func playDarthVader(sender: UIButton) {
+        NSLog("playDarthVader")
         playSoundBite(pitch: PitchLow)
     }
     
-    func playSoundBite(rate: Float = 1.0, pitch: Float = 1.0) {
+    @IBAction func playReverb(sender: UIButton) {
+        NSLog("playReverb")
+        playSoundBite(reverb: ReverbWet)
+    }
+    
+    // plays audio with effects added by modifying any of the specified parameters
+    func playSoundBite(rate: Float = 1.0, pitch: Float = 1.0, reverb: Float = 0) {
         // TASK 3: stop and reset the audio engine
         audioEngine.stop()
         audioEngine.reset()
         
-        // Note: for some reason audioUnitTimePitch is not a reusable instance.
+        // TODO: (BCM): for some reason AVAudioUnit instances cannot be reused, i'm not sure why.
         var audioUnitTimePitch = AVAudioUnitTimePitch()
         audioUnitTimePitch.rate = rate
         audioUnitTimePitch.pitch = pitch
         
+        var audioUnitReverb = AVAudioUnitReverb()
+        audioUnitReverb.wetDryMix = reverb
+        
         var audioPlayerNode = AVAudioPlayerNode()
         audioEngine.attachNode(audioPlayerNode)
         audioEngine.attachNode(audioUnitTimePitch)
+        audioEngine.attachNode(audioUnitReverb)
         
         audioEngine.connect(audioPlayerNode, to:audioUnitTimePitch, format:nil)
-        audioEngine.connect(audioUnitTimePitch, to:audioEngine.outputNode, format:nil)
+        audioEngine.connect(audioUnitTimePitch, to:audioUnitReverb, format:nil)
+        audioEngine.connect(audioUnitReverb, to:audioEngine.outputNode, format:nil)
 
         audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
         audioEngine.startAndReturnError(nil)
         audioPlayerNode.play()
     }
-    
-    @IBAction func stop(sender: UIButton) {
-        audioEngine.stop()
-        audioEngine.reset()
-    }
-    
+
 }

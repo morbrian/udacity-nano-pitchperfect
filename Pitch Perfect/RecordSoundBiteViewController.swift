@@ -9,11 +9,22 @@
 import UIKit
 import AVFoundation
 
+/*
+  RecordSoundBiteViewController displays a button to start recording,
+  and buttons to stop or pause recording once it is started.
+  Clicking stop will segue to another view, handing off the information
+  for retrieving the just completed recording.
+*/
+
+// TODO: BCM: would like to learn about localization and internationalization to replace these constants.
+let InfoTapToRecord = "Tap to Record"
+let InfoRecordingInProgress = "Recording in Progress"
+let InfoRecordingPaused = "Recording Paused"
+
 class RecordSoundBiteViewController: UIViewController, AVAudioRecorderDelegate {
     
     // TASK 4: Tap To Record label
-    @IBOutlet weak var tapToRecordLabel: UILabel!
-    @IBOutlet weak var recordingInProgressLabel: UILabel!
+    @IBOutlet weak var infoStatusLabel: UILabel!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var pauseButton: UIButton!
@@ -29,11 +40,22 @@ class RecordSoundBiteViewController: UIViewController, AVAudioRecorderDelegate {
     override func viewWillAppear(animated: Bool) {
         updateDisplay()
     }
+    
+    // figures out which of the three recording states we are in
+    // and return the correct text for the info label.
+    func deriveInfoText() -> String {
+        if (!soundBiteManager.recordingInProgress) {
+            return InfoTapToRecord
+        } else if (soundBiteManager.recordingPaused) {
+            return InfoRecordingPaused
+        } else {
+            return InfoRecordingInProgress
+        }
+    }
 
     func updateDisplay() {
-        tapToRecordLabel.hidden = soundBiteManager.recordingInProgress
+        infoStatusLabel.text = deriveInfoText()
         recordButton.enabled = !soundBiteManager.recordingInProgress
-        recordingInProgressLabel.hidden = !soundBiteManager.recordingInProgress
         stopButton.hidden = !soundBiteManager.recordingInProgress
         pauseButton.hidden = !soundBiteManager.recordingInProgress
     }
@@ -52,7 +74,6 @@ class RecordSoundBiteViewController: UIViewController, AVAudioRecorderDelegate {
         soundBiteManager.toggleRecording()
         updateDisplay()
     }
-    
     
     func audioRecorderDidFinishRecording(recorder: AVAudioRecorder!, successfully flag: Bool) {
         self.performSegueWithIdentifier("stopRecording", sender: soundBiteManager.lastRecordedSoundBite())

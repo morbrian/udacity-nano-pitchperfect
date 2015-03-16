@@ -11,16 +11,15 @@
 import Foundation
 import AVFoundation
 
+/*
+  SoundBiteManager encapsulates audio effect code to help keep the ViewController looking clean.
+  It exposes AVAudioRecorderDelegate methods so that the ViewController can still perform custom
+  activities when the recording completes.
+*/
+
 class SoundBiteManager: NSObject, AVAudioRecorderDelegate {
     
     weak var delegate: AVAudioRecorderDelegate?
-    
-    // true when a recording is in progress
-    var recordingInProgress: Bool {
-        get {
-            return biteInProgress != nil
-        }
-    }
     
     // date formatter used for new recoding files
     private let formatter = NSDateFormatter()
@@ -33,6 +32,20 @@ class SoundBiteManager: NSObject, AVAudioRecorderDelegate {
     
     // reference to AudioRecorder used while we are recording
     private var audioRecorder:AVAudioRecorder!
+    
+    // true when a recording is in progress, this includes the paused state
+    var recordingInProgress: Bool {
+        get {
+            return audioRecorder != nil
+        }
+    }
+    
+    // true if a recording has been started, but is currently in a paused state.
+    var recordingPaused: Bool {
+        get {
+            return recordingInProgress && !audioRecorder.recording
+        }
+    }
 
     override init() {
         formatter.dateFormat = "ddMMyyyy-HHmmss"
@@ -74,6 +87,7 @@ class SoundBiteManager: NSObject, AVAudioRecorderDelegate {
         audioRecorder.stop()
         var audioSession = AVAudioSession.sharedInstance();
         audioSession.setActive(false, error: nil)
+        audioRecorder = nil
     }
     
     // return the last sound bite that was recorded
