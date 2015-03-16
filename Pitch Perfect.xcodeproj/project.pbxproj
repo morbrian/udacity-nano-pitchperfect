@@ -16,8 +16,6 @@
 		4E3C2CB81AAD1AF5008D9307 /* PlaySoundBiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3C2CB71AAD1AF5008D9307 /* PlaySoundBiteViewController.swift */; };
 		4E49772D1AB29B1B00C6C02C /* SoundBite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E49772C1AB29B1A00C6C02C /* SoundBite.swift */; };
 		4E49772F1AB4C62B00C6C02C /* SoundBiteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E49772E1AB4C62B00C6C02C /* SoundBiteManager.swift */; };
-		4E9CEEEB1AB4FA5B005184A0 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E9CEEE91AB4FA5B005184A0 /* Crashlytics.framework */; };
-		4E9CEEEC1AB4FA5B005184A0 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E9CEEEA1AB4FA5B005184A0 /* Fabric.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,8 +42,6 @@
 		4E3C2CB71AAD1AF5008D9307 /* PlaySoundBiteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaySoundBiteViewController.swift; sourceTree = "<group>"; };
 		4E49772C1AB29B1A00C6C02C /* SoundBite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundBite.swift; sourceTree = "<group>"; };
 		4E49772E1AB4C62B00C6C02C /* SoundBiteManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundBiteManager.swift; sourceTree = "<group>"; };
-		4E9CEEE91AB4FA5B005184A0 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
-		4E9CEEEA1AB4FA5B005184A0 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,8 +49,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E9CEEEB1AB4FA5B005184A0 /* Crashlytics.framework in Frameworks */,
-				4E9CEEEC1AB4FA5B005184A0 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,8 +68,6 @@
 				4E3C2C941AAC146A008D9307 /* Pitch Perfect */,
 				4E3C2CAA1AAC146A008D9307 /* Pitch PerfectTests */,
 				4E3C2C931AAC146A008D9307 /* Products */,
-				4E9CEEE91AB4FA5B005184A0 /* Crashlytics.framework */,
-				4E9CEEEA1AB4FA5B005184A0 /* Fabric.framework */,
 			);
 			sourceTree = "<group>";
 		};
