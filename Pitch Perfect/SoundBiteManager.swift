@@ -28,6 +28,9 @@ class SoundBiteManager: NSObject, AVAudioRecorderDelegate {
     private var biteInProgress: SoundBite!
     
     // list of all recorded sound bites
+    // TODO: (BCM): I am using an array here because later 
+    //       I would like to populate this as a list of all past recordings
+    //       and let the user choose from past sounds, rename them, delete them etc...
     private var soundBites = [SoundBite]()
     
     // reference to AudioRecorder used while we are recording
